@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Weather App</title>
+</head>
+<body>
+    <h1>Weather App</h1>
+    <p id="name"></p>
+    <div class="temp">
+    <p id="temp"></p>
+    <p id="feelslike"></p>
+    <p id="mintemp"></p>
+    <p id="maxtemp"></p>
+    </div>
+    <p id="description"></p>
+    <div><img id="weatherIcon" src="/icons/unknown.png"/></div>
+
+
+    <script>
+        fetch('https://api.openweathermap.org/data/2.5/weather?q=london&units=metric&APPID=06af2c84a95e6a736fd7bab4b3be279d')
+            .then(function (response) {
+                // The API call was successful!
+                return response.json();
+            })
+            .then(function (data) {
+                init(data);
+            })
+            .catch(function (err) {
+                // There was an error
+                console.warn('Something went wrong.', err);
+            });
+    
+            const init = (data) => {
+                console.log(data);
+                updateName(data.name)
+                updateTemp(Math.round(data.main.temp))
+                updateMinTemp(Math.round(data.main.temp_min))
+                updateMaxTemp(Math.round(data.main.temp_max))
+                updateFeelsLike(Math.round(data.main.feels_like))
+                updateDescription(data.weather[0].description)
+                updateIcon(data.weather[0].icon);
+            }
+            
+            const updateName = (name) => {
+                const nameElement = document.getElementById('name');
+                nameElement.textContent = name;
+            }
+            
+            const updateTemp = (temp) => {
+                const tempElement = document.getElementById('temp');
+                tempElement.textContent = temp + "C";
+            }
+            const updateMinTemp = (mintemp) => {
+                const mintempElement = document.getElementById('mintemp');
+                mintempElement.textContent ="Minimum Temperature " + mintemp + "C";
+            }
+            const updateMaxTemp = (maxtemp) => {
+                const maxtempElement = document.getElementById('maxtemp');
+                maxtempElement.textContent ="Maximum Temperature " + maxtemp + "C";
+            }
+            const updateFeelsLike = (feelslike) => {
+                const feelslikeElement = document.getElementById('feelslike');
+                feelslikeElement.textContent ="Feels like " + feelslike + "C";
+            }
+            const updateDescription = (description) => {
+                const descriptionElement = document.getElementById('description');
+                descriptionElement.textContent = description;
+            }
+            const updateIcon = (icon) => {
+                const iconElement = document.getElementById('weatherIcon');
+                iconElement.src = `icons/${icon}.png`; 
+            }
+            
+            
+            
+        
+    </script>
+</body>
+</html>
