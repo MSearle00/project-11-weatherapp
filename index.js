@@ -24,7 +24,6 @@ function setQuery(e) {
         });
 
         const init = (data) => {
-            console.log(data);
             updateName(data.name)
             updateTemp(Math.round(data.main.temp))
             updateFeelsLike(Math.round(data.main.feels_like))
