@@ -5,13 +5,13 @@ const api = {
 
 const searchbox = document.getElementById('searchBox');
     searchbox.addEventListener('keypress', setQuery);
-function setQuery(evt) {
- if (evt.keyCode == 13) {
-     getResults(searchbox.value);
+function setQuery(e) {
+ if (e.keyCode == 13) {
+     getWeather(searchbox.value);
  }
 }
 
-    function getResults(query){
+    function getWeather(query){
     fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
         .then(function (response) {
             return response.json();
