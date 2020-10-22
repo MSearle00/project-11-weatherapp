@@ -1,0 +1,42 @@
+h1,
+#date,
+#searchBox,
+#name,
+#temp,
+#feelslike,
+#mintemp,
+#maxtemp,
+#description,
+.iconBox,
+#weatherIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#searchBox {
+  width: 20%;
+  height: 5vh;
+  margin: auto;
+}
+
+#name {
+}
+
+#temp {
+}
+
+#feelslike {
+}
+
+#mintemp {
+}
+
+#maxtemp {
+}
+
+#description {
+}
+
+#weatherIcon {
+}

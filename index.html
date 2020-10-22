@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Weather App</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <h1>Weather App</h1>
+    <input type="text" autocomplete="off" id="searchBox" placeholder="Search for a city..." />
+    <p id="date"></p>
     <p id="name"></p>
     <div class="temp">
     <p id="temp"></p>
@@ -15,20 +18,34 @@
     <p id="maxtemp"></p>
     </div>
     <p id="description"></p>
-    <div><img id="weatherIcon" src="/icons/unknown.png"/></div>
+    <div class="iconBox"><img id="weatherIcon" src="/icons/unknown.png"/></div>
 
 
     <script>
-        fetch('https://api.openweathermap.org/data/2.5/weather?q=london&units=metric&APPID=06af2c84a95e6a736fd7bab4b3be279d')
+
+        const api = {
+        key: "06af2c84a95e6a736fd7bab4b3be279d",
+        base: "https://api.openweathermap.org/data/2.5/"
+}
+
+        const searchbox = document.getElementById('searchBox');
+        searchbox.addEventListener('keypress', setQuery);
+
+        function setQuery(evt) {
+        if (evt.keyCode == 13) {
+            getResults(searchbox.value);
+        }
+        }
+
+        function getResults(query){
+        fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
             .then(function (response) {
-                // The API call was successful!
                 return response.json();
             })
             .then(function (data) {
                 init(data);
             })
             .catch(function (err) {
-                // There was an error
                 console.warn('Something went wrong.', err);
             });
     
@@ -42,12 +59,16 @@
                 updateDescription(data.weather[0].description)
                 updateIcon(data.weather[0].icon);
             }
+        }
             
+            var date = new Date().toDateString();
+            const dateElement = document.getElementById('date');
+            dateElement.textContent = date;
+
             const updateName = (name) => {
                 const nameElement = document.getElementById('name');
                 nameElement.textContent = name;
             }
-            
             const updateTemp = (temp) => {
                 const tempElement = document.getElementById('temp');
                 tempElement.textContent = temp + "C";
@@ -72,6 +93,7 @@
                 const iconElement = document.getElementById('weatherIcon');
                 iconElement.src = `icons/${icon}.png`; 
             }
+
             
             
             
